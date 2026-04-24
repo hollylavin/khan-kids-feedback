@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Feature Requests — Khan Kids Focus Groups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --ink: #1a1a1a;
+    --ink-2: #374151;
+    --muted: #6b7280;
+    --muted-2: #9ca3af;
+    --rule: #e5e7eb;
+    --rule-2: #eef0f3;
+
+    --green-band: #eaf4e8;
+    --green-band-2: #f4f9f2;
+    --green-accent: #5ea04d;
+    --green-accent-dark: #3f7a31;
+    --green-bar: #7fb56d;
+    --green-bar-light: #a7cf99;
+    --green-bar-soft: #cfe3c5;
+
+    /* Mauve / burgundy theme for Content section */
+    --mauve-band: #f6e4e9;
+    --mauve-band-2: #faeff3;
+    --mauve-accent: #8a4a5c;
+    --mauve-accent-dark: #6d3a49;
+    --mauve-bar: #a85c74;
+    --mauve-bar-light: #c68a9b;
+    --mauve-bar-soft: #e5c4cf;
+
+    /* Amber / golden theme for Data section */
+    --amber-band: #fcecc9;
+    --amber-band-2: #fdf5e2;
+    --amber-accent: #c48a1e;
+    --amber-accent-dark: #9a6b14;
+    --amber-bar: #d9a63d;
+    --amber-bar-light: #e8c072;
+    --amber-bar-soft: #f3dea8;
+
+    --pill-bg: #eaf4e8;
+    --pill-fg: #3f7a31;
+    --pill-border: #c7dfbd;
+
+    --orange-bg: #fff1d6;
+    --orange-fg: #a36a0b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  /* Header */
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+
+  .subhead {
+    font-size: 16px;
+    color: var(--ink-2);
+    margin-bottom: 18px;
+  }
+
+  .toggle {
+    display: inline-flex;
+    background: #ffffff;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 4px;
+    gap: 2px;
+    flex-wrap: wrap;
+  }
+
+  .toggle button {
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-2);
+    padding: 7px 14px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+  }
+
+  .toggle button:hover { color: var(--ink); }
+
+  .toggle button.active {
+    background: #ffffff;
+    color: var(--ink);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 0 0 1px var(--rule);
+  }
+
+  /* Intro bullets */
+  .intro-bullets {
+    list-style: none;
+    margin: 16px 0 20px;
+    padding: 0;
+  }
+
+  .intro-bullets li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+    color: var(--ink-2);
+    font-size: 15px;
+  }
+
+  .intro-bullets li::before {
+    content: "•";
+    position: absolute;
+    left: 4px;
+    top: 0;
+    color: var(--ink-2);
+  }
+
+  .intro-bullets strong { color: var(--ink); font-weight: 700; }
+
+  /* Inline pills */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    line-height: 1.4;
+    vertical-align: baseline;
+    white-space: nowrap;
+  }
+
+  .pill-green {
+    background: var(--pill-bg);
+    color: var(--pill-fg);
+    border-color: var(--pill-border);
+  }
+
+  .pill-orange {
+    background: var(--orange-bg);
+    color: var(--orange-fg);
+    border-color: #f2d7a6;
+  }
+
+  .pill-gray {
+    background: #f3f4f6;
+    color: var(--ink-2);
+    border-color: var(--rule);
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    padding-top: 6px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 32px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+
+  .legend-swatch {
+    width: 22px;
+    height: 14px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  /* Section card */
+  .section-card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .section-header {
+    background: var(--green-band);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .section-title .dot {
+    width: 9px;
+    height: 9px;
+    background: var(--green-accent);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .section-title .info {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--green-accent);
+    color: var(--green-accent);
+    border-radius: 50%;
+    font-size: 11px;
+    font-style: italic;
+    font-family: Georgia, serif;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: help;
+  }
+
+  .section-desc {
+    background: var(--green-band-2);
+    padding: 18px 24px;
+    font-size: 14.5px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-desc strong {
+    color: var(--green-accent-dark);
+    font-weight: 600;
+  }
+
+  /* ===== Content section: mauve theme ===== */
+  .section-card[data-category="content"] .section-header {
+    background: var(--mauve-band);
+  }
+  .section-card[data-category="content"] .section-desc {
+    background: var(--mauve-band-2);
+  }
+  .section-card[data-category="content"] .section-title .dot {
+    background: var(--mauve-accent);
+  }
+  .section-card[data-category="content"] .section-title .info {
+    border-color: var(--mauve-accent);
+    color: var(--mauve-accent);
+  }
+  .section-card[data-category="content"] .section-desc strong {
+    color: var(--mauve-accent-dark);
+  }
+  .section-card[data-category="content"] .bar-fill {
+    background: var(--mauve-bar);
+  }
+  .section-card[data-category="content"] .bar-fill.moderate {
+    background: var(--mauve-bar-light);
+  }
+  .section-card[data-category="content"] .bar-fill.light {
+    background: var(--mauve-bar-soft);
+  }
+  .section-card[data-category="content"] blockquote {
+    border-left-color: var(--mauve-accent);
+  }
+
+  /* ===== Data section: amber theme ===== */
+  .section-card[data-category="data"] .section-header {
+    background: var(--amber-band);
+  }
+  .section-card[data-category="data"] .section-desc {
+    background: var(--amber-band-2);
+  }
+  .section-card[data-category="data"] .section-title .dot {
+    background: var(--amber-accent);
+  }
+  .section-card[data-category="data"] .section-title .info {
+    border-color: var(--amber-accent);
+    color: var(--amber-accent);
+  }
+  .section-card[data-category="data"] .section-desc strong {
+    color: var(--amber-accent-dark);
+  }
+  .section-card[data-category="data"] .bar-fill {
+    background: var(--amber-bar);
+  }
+  .section-card[data-category="data"] .bar-fill.moderate {
+    background: var(--amber-bar-light);
+  }
+  .section-card[data-category="data"] .bar-fill.light {
+    background: var(--amber-bar-soft);
+  }
+  .section-card[data-category="data"] blockquote {
+    border-left-color: var(--amber-accent);
+  }
+
+  /* Table */
+  .feature-table { padding: 4px 24px 12px; }
+
+  .table-head {
+    display: grid;
+    grid-template-columns: minmax(240px, 1.3fr) minmax(260px, 2.4fr) 60px;
+    gap: 20px;
+    align-items: center;
+    padding: 14px 0 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted-2);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--rule-2);
+  }
+
+  .table-head .col-count { text-align: right; }
+
+  .feature-row summary {
+    list-style: none;
+    cursor: pointer;
+    border-bottom: 1px solid var(--rule-2);
+    transition: background 0.12s;
+    display: block;
+  }
+
+  .feature-row:last-child summary { border-bottom: 0; }
+  .feature-row summary:hover { background: #fafbfc; }
+  .feature-row summary::-webkit-details-marker { display: none; }
+
+  .table-row {
+    display: grid;
+    grid-template-columns: minmax(240px, 1.3fr) minmax(260px, 2.4fr) 60px;
+    gap: 20px;
+    align-items: center;
+    padding: 14px 0;
+  }
+
+  .feature-name {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .chevron {
+    color: var(--muted-2);
+    font-size: 10px;
+    transition: transform 0.2s;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .feature-row[open] .chevron { transform: rotate(90deg); }
+
+  .bar-track {
+    position: relative;
+    height: 22px;
+    background: #f1f2f4;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background: var(--green-bar);
+    border-radius: 3px;
+    transition: width 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+    width: 0;
+    z-index: 1;
+  }
+
+  .bar-fill.moderate { background: var(--green-bar-light); }
+  .bar-fill.light { background: var(--green-bar-soft); }
+
+  .bar-track::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    bottom: 2px;
+    width: 2px;
+    background: var(--ink);
+    border-radius: 1px;
+    z-index: 2;
+  }
+
+
+
+  .count-val {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .count-n {
+    font-size: 12px;
+    color: var(--muted-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .row-badge { display: flex; justify-content: flex-start; }
+
+  /* Expanded detail */
+  .feature-row .row-detail {
+    padding: 14px 0 22px;
+    background: #fafbfc;
+    border-bottom: 1px solid var(--rule-2);
+  }
+
+  .feature-row:last-child .row-detail { border-bottom: 0; }
+
+  .row-detail-inner {
+    padding: 0 24px 0 24px;
+  }
+
+  .row-detail blockquote {
+    margin: 0;
+    padding: 12px 16px;
+    background: #ffffff;
+    border-left: 3px solid var(--green-accent);
+    border-radius: 4px;
+    font-style: italic;
+    color: var(--ink-2);
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+
+  .sessions-line {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .sessions-line strong { color: var(--ink-2); font-weight: 600; }
+
+  .quotes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .quote-item {
+    margin: 0;
+  }
+
+  .quote-item figcaption {
+    margin-top: 6px;
+    padding-left: 16px;
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  .quote-item .q-teacher {
+    font-weight: 600;
+    color: var(--ink-2);
+    font-style: normal;
+  }
+
+  .quote-item .q-teacher::before {
+    content: "— ";
+    color: var(--muted-2);
+    margin-right: 2px;
+  }
+
+  .quote-item .q-session {
+    font-size: 11.5px;
+    color: var(--muted-2);
+    padding: 1px 7px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: #ffffff;
+  }
+
+  /* Summary block at bottom */
+  .summary-block {
+    margin-top: 32px;
+    padding: 24px;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+  }
+
+  .summary-block h2 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .summary-block p {
+    font-size: 14.5px;
+    color: var(--ink-2);
+    margin-bottom: 10px;
+  }
+
+  .summary-block p:last-child { margin-bottom: 0; }
+
+  /* Responsive */
+  @media (max-width: 820px) {
+    .container { padding: 28px 18px 60px; }
+    h1 { font-size: 26px; }
+    .table-head { display: none; }
+    .table-row {
+      grid-template-columns: 1fr auto;
+      gap: 10px 16px;
+      grid-template-areas:
+        "name count"
+        "bar bar";
+    }
+    .feature-name { grid-area: name; }
+    .count-val { grid-area: count; }
+    .bar-wrap { grid-area: bar; }
+    .section-header { padding: 16px; }
+    .section-desc { padding: 14px 16px; }
+    .feature-table { padding: 4px 16px 12px; }
+    .row-detail-inner { padding: 0 16px; }
+    .legend { gap: 14px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<main class="container">
+
+  <div class="header-row">
+    <div>
+      <h1>Teacher Feature Requests</h1>
+    </div>
+    <nav class="toggle" id="filterToggle" aria-label="Filter features by category">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="ux">UX</button>
+      <button data-filter="content">Content</button>
+      <button data-filter="data">Data</button>
+    </nav>
+  </div>
+
+  <p class="subhead">Synthesis of 4 Khan Kids focus-group sessions (Apr 7, 9, 14, 15 · 2026).</p>
+
+  <ul class="intro-bullets">
+    <li>Bars show the <strong>number of distinct teachers</strong> who raised each feature, on a scale from <strong>0 to 12</strong>.</li>
+    <li>Click any row to see the teachers who raised it, the sessions it surfaced in, and a representative quote.</li>
+  </ul>
+
+  <div class="legend" aria-hidden="true">
+    <div class="legend-item"><span class="legend-swatch" style="background: var(--green-bar);"></span>Strong (≥ 6 teachers)</div>
+    <div class="legend-item"><span class="legend-swatch" style="background: var(--green-bar-light);"></span>Moderate (3–5 teachers)</div>
+    <div class="legend-item"><span class="legend-swatch" style="background: var(--green-bar-soft);"></span>Light (1–2 teachers)</div>
+  </div>
+
+  <div id="sections"></div>
+
+  <div class="summary-block">
+    <h2>How to read this</h2>
+    <p>Every feature below was surfaced by at least one teacher during a focus-group session. A teacher is counted once per feature even if they returned to the point later in the same session. Explicit agreement in the chat ("same as Amy," "I agree") counts as a mention; a thumbs-up or silent nod does not.</p>
+  </div>
+
+</main>
+
+<script>
+  const MAX = 12;         // bar scale 0-12
+  const THRESHOLD = 3;    // recurring threshold (dashed line)
+
+  const sections = [
+    {
+      id: "ux",
+      title: "UX — User Experience",
+      desc: "Features that reduce friction during administration: log-ins, interruptions, classroom transitions.",
+      features: [
+        {
+          name: "Save-progress available in full-class mode",
+          recurring: true,
+          quotes: [
+            { teacher: "Christy", session: "Apr 15", text: "I wish there was a way we could combine them both so that if a child did go to the bathroom, they could keep them where they're at, but then it would be easier for my staff to get the learners on quicker for the full class mode." },
+            { teacher: "Kathy", session: "Apr 9", text: "That would probably be very helpful… especially like when I tend to use the iPads when the children are doing centers — if time is just about to finish and the students are not done, I don't want them to have to start all over again." },
+            { teacher: "Amy", session: "Apr 14", text: "Same as what Demirah said — [it would be helpful to have saved progress in full class mode]." },
+            { teacher: "Rosie", session: "Apr 15", text: "[Agreed with Christy's call to combine the two modes so save-progress is available in full class.]" }
+          ]
+        },
+        {
+          name: "Extend the 10-minute save-progress window",
+          recurring: true,
+          quotes: [
+            { teacher: "Leliana", session: "Apr 7", text: "I don't know if that 10 minutes of saving would be beneficial unless they just get up to use the restroom… for the most part my class, once they've been there more than 10 minutes, I just let them go to free choice." },
+            { teacher: "Stephanie", session: "Apr 7", text: "It's pretty simple to use — and maybe do a save for longer." },
+            { teacher: "Patricia", session: "Apr 14", text: "I feel like it would be more beneficial if it was longer than 10 minutes. Sometimes if we don't finish in the morning, then we continue in the PM session — it may be something like that." },
+            { teacher: "Stephanie Frazee", session: "Apr 15", text: "Maybe being able to save where they stopped until the next time they start would be a better idea — that kid might still have to start over because maybe you only had 15 minutes and then you're done with centers." }
+          ]
+        },
+        {
+          name: "Break / fun activity between assessments",
+          recurring: false,
+          quotes: [
+            { teacher: "Euricorrea", session: "Apr 7", text: "Yes, even when you have to complete the activities first, and then you can go up and trace letters — or any of the activities at the top. My child who was on the spectrum, he loves the tracing game and he loves the music. So even if there was a way to incorporate that, like she said, and lining things up — that would be good." },
+            { teacher: "Destiny Stanley", session: "Apr 7", text: "Same — I have several of them that are like that. They just get mad and they don't want to do the assessments, but they want to just explore and do the coloring. Maybe let them do some of the fun stuff and then go to the next assessment. So they do an assessment and then they do something fun, and then another assessment — where they're not just doing assessment, assessment, assessment." }
+          ]
+        },
+        {
+          name: "Teacher button to repeat instructions mid-task",
+          recurring: true,
+          quotes: [
+            { teacher: "Apr 9 · speaker unknown", session: "Apr 9", text: "I tap Cody so Cody can repeat the question — and Cody did not repeat it. So that would be a great addition — I would repeat, tap the heart that's on the same side, or whatever the instructions are, to be repeated. If I get sidetracked helping someone else, I don't really remember what your instructions were." },
+            { teacher: "Apr 9 · speaker unknown", session: "Apr 9", text: "Right. Right. So I agree — maybe even if they can type the instructions above so we can read it and know how to direct the child. That would be awesome. It's something that we can get the directions." },
+            { teacher: "Lisette", session: "Apr 15", text: "I had to repeat the instructions after they said it in the iPad, so they could hear it again and actually do it. And some I had to kind of just direct them — 'when they're telling you to do this, you need to do the opposite.'" }
+          ]
+        },
+        {
+          name: "Lock / hide completed assessments on student home screen",
+          recurring: false,
+          quotes: [
+            { teacher: "Patricia", session: "Apr 14", text: "Sometimes my learners — when they go to their homepage and all the assignments are showing and they have a star, that means they completed them. Sometimes they accidentally took it again. So maybe locking those assignments, or removing them from their plate — that would be very beneficial, because now it's like they're just doing it over and over." }
+          ]
+        }
+      ]
+    },
+    {
+      id: "content",
+      title: "Content — Assessment Design",
+      desc: "Feedback on the assessments themselves: which questions worked, which confused learners, and which age-level expectations felt off.",
+      features: [
+        {
+          name: "Remove or redesign the pom-pom line-matching question",
+          recurring: true,
+          quotes: [
+            { teacher: "Destiny", session: "Apr 7", text: "Mine — I had trouble matching them. They for some reason just… it was like they didn't understand that you're supposed to move your finger from one to the other. They could find it but they just couldn't match it. That one was just like — it was more than one task for them." },
+            { teacher: "Leilani", session: "Apr 9", text: "The popcorn and the pom-pom — I think they got confused. Like they saw the picture, but they were trying to put those two sounds together. I would have to sit there and repeat what the pom-poms were saying." },
+            { teacher: "Jessica A.", session: "Apr 9", text: "They would just become frustrated or give up. They're like, 'no, I don't want to do this anymore.' They lost interest because they weren't grasping that each pom-pom had its own sound." },
+            { teacher: "Apr 9 · speaker unknown", session: "Apr 9", text: "That's how my students were as well — after a while they just mashed their favorite color pom-pom, just a color pom-pom, so they continue to eat [move through]." }
+          ]
+        },
+        {
+          name: "Simpler, more game-like content for 3YOs and students with IEPs",
+          recurring: true,
+          quotes: [
+            { teacher: "Apr 7 · speaker unknown", session: "Apr 7", text: "For the three-year-olds the material should be a little more simpler. For them to understand — with them coming like fresh from the toddler classroom, it's new to them to even be sitting down and getting on the iPad. If it was something more to ease them into with the material, I think that would be pretty good and helpful." },
+            { teacher: "Destiny Stanley", session: "Apr 7", text: "My three-year-olds — some of the ones don't want to do the apps. But I think a lot of it is just like over their head. I feel like for three-year-olds it should be more game-ish, if that makes sense. And more of their level. For the four-year-olds I think it's perfect." },
+            { teacher: "Liliana", session: "Apr 7", text: "This is something that we could use for typical learning students, but we do also have IEP learners. For example, my IEP learner is on the spectrum and she is not wanting to come and work on the tablet, or match a pattern in person with me. So maybe cater a little bit to even the lower-level learners, because we have them. I find that my learners that are on the autism spectrum — they love collections and lining things up. They love colors. If they're into animals like ocean creatures, or color bears — to make it more enticing for their level, the kind of things that they like to do. They can all be very different, as we know — to know one child is to know one child. But that's what I find they have in common: they love collections and sorting things." }
+          ]
+        },
+        {
+          name: "Clearer, age-appropriate question wording",
+          recurring: false,
+          quotes: [
+            { teacher: "Amy", session: "Apr 14", text: "'How many people are there?' — for a four-year-old, what do you mean 'are there'? 'How many people do you see?' — that's basically the language I know for myself I'll use in the classroom. If they've never heard the phrase, they're not going to get that concept." },
+            { teacher: "Stephanie Frazee", session: "Apr 15", text: "'Find the right letter to make the word bed' — maybe if it was more like 'what is the first letter' so they can correlate the sound to the letter. Even if the bear sounded it out a little bit more after they said 'can' — just so the beginning students can hear the sounds, that would help." }
+          ]
+        },
+        {
+          name: "Align with CA Preschool/TK Foundations — ramp difficulty across the year",
+          recurring: false,
+          quotes: [
+            { teacher: "Christy", session: "Apr 15", text: "In California we use the Preschool and TK Learning Foundations. I would say, in the beginning of the year, making the assessments match more the skills that our learners are doing at that time — and then as the year progresses, making the assessments more challenging. Kind of like what we talked about earlier with the letters and the sounds and the words." }
+          ]
+        }
+      ]
+    },
+    {
+      id: "data",
+      title: "Data — Dashboard & Reporting",
+      desc: "How teachers want to see, use, and export student data — particularly to support TS Gold, DRDP, and district observational tools.",
+      features: [
+        {
+          name: "Downloadable CSV / spreadsheet export of results",
+          recurring: true,
+          quotes: [
+            { teacher: "Destiny", session: "Apr 7", text: "I would love that feature. For one it gives the description of what they can do and the level they're at. Because we use TS Gold — a lot of this matches what we use. So it would be easy to either take a picture of this and put it in there, or copy the description. I would really like that." },
+            { teacher: "Shan Stewart", session: "Apr 7", text: "I think it would be helpful as well — and the description of it is really well, like Destiny said. Especially for every age group, and especially for children going to kindergarten, it could be in their transcript — that would actually help them out as well, knowing what they do know and what they don't." },
+            { teacher: "Daria (Mdeauria)", session: "Apr 9", text: "That's a very useful tool — especially because I appreciate the duration. The fact that I can see how long my students spent on an assessment lets me know, 'hey, you only spent three minutes, everybody else spent about eight — you rushed through this, friend.' That kind of stuff. So yeah, that would be really good." },
+            { teacher: "Summar", session: "Apr 9", text: "I think that would be great because it gives you an overview of all the students. Instead of going back and forth on the app, being able to download and look at it all together would be beneficial — not only us, but our students." },
+            { teacher: "Apr 9 · speaker unknown", session: "Apr 9", text: "That would help also with the kids' goals so we can leverage them as well — if we could see what they're doing, we don't have to keep going back and forth. So that would be a great idea." },
+            { teacher: "Jessica A.", session: "Apr 9", text: "I like this as well. It gives more usable information." },
+            { teacher: "Patricia", session: "Apr 14", text: "Yes — well, yes — only because I think that's what I have to do when we do our assessments. We have to write it in that descriptive language for each student, and sometimes it's frustrating when you try to do a small group and have to write similar things. So yes, that would be very helpful. It would save me a lot of writing." },
+            { teacher: "Demira", session: "Apr 14", text: "I feel like it would be helpful in the classroom with getting everybody's data, and also with parents — I have a few parents trying to figure out if their child's ready for kindergarten. Going straight to there — 'okay, this child's learned age three and now he's working on age four' — it'll help me discuss with parents and figure out their goal sheets for the next quarter." },
+            { teacher: "Lorena", session: "Apr 14", text: "[Expressed agreement via emoji reaction in chat that the CSV download would be useful.]" },
+            { teacher: "Lisbeth (Lserrato)", session: "Apr 14", text: "It would be extremely helpful — especially for us that use the DRDP tool to gather data to show mastery of certain things like math and literacy. We can use that evidence to either support, or know, 'okay, they do know how to make an ABC pattern — it was just a day where it was a coincidence they were copying their neighbor.' It could just help us with our notes." }
+          ]
+        },
+        {
+          name: "Question-level data (which items right or wrong)",
+          recurring: false,
+          quotes: [
+            { teacher: "Rosie", session: "Apr 15", text: "When you see their results, you're not really seeing — like most of your kids got this right or most of them didn't. I don't know what they were getting right consistently or wrong consistently, to be able to support that further in the classroom. Like, were they all getting the pattern if it's just two things — did they struggle with three? To better help them: 'oh, these people need more of this, these guys are okay.'" }
+          ]
+        },
+        {
+          name: "Pre / post-assessment baselines to show growth",
+          recurring: false,
+          quotes: [
+            { teacher: "Rosie", session: "Apr 15", text: "Say we know that sorting is coming up — you give them the pre-assessment on Khan and we can see where they're at. That helps us map our lesson plans to see exactly what skills we need to teach, because what if we don't need to teach basics — what if our learners are higher and we can move up a little? It's nice to see the growth from the first pre to the post. That would really really be helpful." }
+          ]
+        },
+        {
+          name: "Per-letter inventory (which letters a student knows)",
+          recurring: false,
+          quotes: [
+            { teacher: "Liliana", session: "Apr 7", text: "For literacy — is there something that would show how many letters they know by name, or how many letters they know by sound? Is that something that could be in the data?" }
+          ]
+        }
+      ]
+    }
+  ];
+
+  /* Derive count & sessions from quotes */
+  sections.forEach(sec => {
+    sec.features.forEach(f => {
+      f.count = f.quotes.length;
+      f.sessions = [...new Set(f.quotes.map(q => q.session))];
+    });
+  });
+
+  /* Render */
+  const el = document.getElementById("sections");
+
+  function barClass(count) {
+    if (count >= 6) return "";
+    if (count >= 3) return "moderate";
+    return "light";
+  }
+
+  sections.forEach(sec => {
+    sec.features.sort((a, b) => b.count - a.count);
+
+    const card = document.createElement("section");
+    card.className = "section-card";
+    card.dataset.category = sec.id;
+
+    const thresholdPct = (THRESHOLD / MAX) * 100;
+
+    let rowsHTML = "";
+    sec.features.forEach(f => {
+      const pct = Math.max(2, (f.count / MAX) * 100);
+
+      const quotesHTML = f.quotes.map(q => `
+        <figure class="quote-item">
+          <blockquote>${q.text}</blockquote>
+          <figcaption>
+            <span class="q-teacher">${q.teacher}</span>
+            <span class="q-session">${q.session}</span>
+          </figcaption>
+        </figure>
+      `).join("");
+
+      rowsHTML += `
+        <details class="feature-row">
+          <summary>
+            <div class="table-row">
+              <div class="feature-name">
+                <span class="chevron">▸</span>
+                ${f.name}
+              </div>
+              <div class="bar-wrap">
+                <div class="bar-track" style="--threshold: ${thresholdPct}%;">
+                  <div class="bar-fill ${barClass(f.count)}" data-target="${pct}"></div>
+                </div>
+              </div>
+              <div class="count-val">${f.count}</div>
+            </div>
+          </summary>
+          <div class="row-detail">
+            <div class="row-detail-inner">
+              <div class="quotes-list">${quotesHTML}</div>
+            </div>
+          </div>
+        </details>
+      `;
+    });
+
+    card.innerHTML = `
+      <header class="section-header">
+        <div class="section-title">
+          <span class="dot"></span>
+          ${sec.title}
+          <span class="info" title="${sec.desc.replace(/"/g, "&quot;")}">i</span>
+        </div>
+      </header>
+      <div class="section-desc">${sec.desc}</div>
+      <div class="feature-table">
+        <div class="table-head">
+          <div>Feature</div>
+          <div>Teachers who raised it</div>
+          <div class="col-count">Count</div>
+        </div>
+        ${rowsHTML}
+      </div>
+    `;
+
+    el.appendChild(card);
+  });
+
+  /* Animate bars on scroll */
+  const barObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const bars = entry.target.querySelectorAll(".bar-fill");
+        bars.forEach((b, i) => {
+          setTimeout(() => { b.style.width = b.dataset.target + "%"; }, 60 * i);
+        });
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll(".section-card").forEach(c => barObserver.observe(c));
+
+  /* Filter */
+  const toggle = document.getElementById("filterToggle");
+  toggle.addEventListener("click", e => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+    toggle.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const filter = btn.dataset.filter;
+    document.querySelectorAll(".section-card").forEach(card => {
+      card.style.display = (filter === "all" || card.dataset.category === filter) ? "" : "none";
+    });
+  });
+</script>
+
+</body>
+</html>
