@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Teacher Feature Requests — Khan Kids Focus Groups</title>
+<style>
+  /* ---------- Base ---------- */
+  :root {
+    --bg: #fafaf7;
+    --surface: #ffffff;
+    --ink: #1d1d1f;
+    --ink-soft: #4a4a52;
+    --muted: #8a8a92;
+    --border: #e8e8e3;
+    --border-soft: #f0f0eb;
+    --accent: #14b067;       /* Khan green */
+    --accent-soft: #d6f1e2;
+    --strong: #14b067;       /* ≥6 teachers */
+    --moderate: #f5b400;     /* 3-5 teachers */
+    --light: #c9c9c4;        /* 1-2 teachers */
+    --bar-track: #f3f3ee;
+    --shadow: 0 1px 2px rgba(20, 20, 30, 0.04), 0 4px 12px rgba(20, 20, 30, 0.04);
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Charter', 'Iowan Old Style', 'Georgia', 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .sans {
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  }
+  a { color: var(--accent); }
+
+  /* ---------- Layout ---------- */
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 56px 28px 96px;
+  }
+
+  header.hero {
+    margin-bottom: 36px;
+  }
+  .eyebrow {
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-family: 'Charter', 'Iowan Old Style', 'Georgia', serif;
+    font-weight: 700;
+    font-size: clamp(34px, 5vw, 48px);
+    line-height: 1.1;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .lede {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 64ch;
+    margin: 0;
+  }
+
+  /* ---------- Filter tabs ---------- */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin: 32px 0 18px;
+    flex-wrap: wrap;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  }
+  .tab {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink-soft);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .tab:hover { background: #f6f6f1; }
+  .tab.active {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .tab .count {
+    margin-left: 6px;
+    color: inherit;
+    opacity: 0.6;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- Legend ---------- */
+  .legend {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-size: 12.5px;
+    color: var(--muted);
+    margin: 18px 0 28px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .legend .item { display: inline-flex; align-items: center; gap: 8px; }
+  .swatch {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+  }
+
+  /* ---------- Bar list ---------- */
+  .features {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .feature {
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .feature:last-child { border-bottom: none; }
+  .feature-row {
+    display: grid;
+    grid-template-columns: 1fr 220px 56px;
+    gap: 18px;
+    align-items: center;
+    padding: 16px 22px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .feature-row:hover { background: #fbfbf7; }
+  .feature.open .feature-row { background: #fbfbf7; }
+
+  .feature-name {
+    font-family: 'Charter', 'Iowan Old Style', 'Georgia', serif;
+    font-size: 17px;
+    color: var(--ink);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .feature-meta {
+    margin-top: 4px;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .feature-meta .dot { display: inline-block; margin: 0 8px; opacity: 0.5; }
+
+  .bar {
+    position: relative;
+    height: 22px;
+    background: var(--bar-track);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background: var(--light);
+    border-radius: 4px;
+    transition: width 0.5s cubic-bezier(.2,.7,.2,1);
+  }
+  .bar-fill.strong { background: var(--strong); }
+  .bar-fill.moderate { background: var(--moderate); }
+
+  .count-cell {
+    text-align: right;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .count-cell .of {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    margin-left: 2px;
+  }
+
+  /* ---------- Expanded detail ---------- */
+  .feature-detail {
+    display: none;
+    padding: 4px 22px 24px;
+    color: var(--ink-soft);
+    font-size: 15px;
+    border-top: 1px dashed var(--border);
+    margin-top: 0;
+    background: #fdfdf9;
+  }
+  .feature.open .feature-detail { display: block; }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 32px;
+    padding-top: 18px;
+  }
+  .detail-grid h4 {
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+    color: var(--muted);
+    margin: 0 0 10px;
+    font-weight: 700;
+  }
+  .teachers, .sessions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .chip {
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #efefe8;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .chip.session { background: var(--accent-soft); color: #0c724a; }
+  .summary {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border-soft);
+  }
+  .summary p {
+    margin: 0 0 10px;
+  }
+  blockquote {
+    margin: 12px 0 0;
+    padding: 12px 18px;
+    border-left: 3px solid var(--accent);
+    background: #fff;
+    border-radius: 4px;
+    font-style: italic;
+    color: var(--ink);
+    font-size: 14.5px;
+  }
+  blockquote cite {
+    display: block;
+    margin-top: 6px;
+    font-style: normal;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  }
+
+  /* ---------- How to read ---------- */
+  .how-to {
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+  .how-to h2 {
+    font-family: 'Charter', 'Iowan Old Style', 'Georgia', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.005em;
+  }
+  .how-to p {
+    color: var(--ink-soft);
+    margin: 0 0 12px;
+    font-size: 15.5px;
+    max-width: 70ch;
+  }
+  .sessions-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  footer.foot {
+    margin-top: 48px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border-soft);
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 720px) {
+    .wrap { padding: 36px 18px 64px; }
+    .feature-row {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .feature-row .bar-cell {
+      grid-row: 2;
+    }
+    .feature-row .count-cell {
+      grid-row: 2;
+      grid-column: 1;
+      text-align: left;
+      font-size: 14px;
+    }
+    .bar-cell { width: 100%; }
+    .count-cell { display: none; }
+    .feature-name { font-size: 16px; }
+    .detail-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+  /* indicator chevron */
+  .chev {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-right: 1.5px solid var(--muted);
+    border-bottom: 1.5px solid var(--muted);
+    transform: rotate(45deg) translate(-2px, -2px);
+    transition: transform 0.2s ease;
+    margin-left: 2px;
+    vertical-align: middle;
+  }
+  .feature.open .chev {
+    transform: rotate(-135deg) translate(-2px, -2px);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Khan Kids · Pilot Focus Groups · April 2026</div>
+    <h1>Teacher Feature Requests</h1>
+    <p class="lede">Synthesis of 6 Khan Kids focus-group sessions (Apr 7, 8, 9, 14, 15 · 2026), including one Spanish-language session with bilingual classroom teachers.</p>
+  </header>
+
+  <div class="tabs" id="tabs" role="tablist">
+    <button class="tab active" data-cat="all">All <span class="count" id="count-all"></span></button>
+    <button class="tab" data-cat="UX">UX <span class="count" id="count-UX"></span></button>
+    <button class="tab" data-cat="Content">Content <span class="count" id="count-Content"></span></button>
+    <button class="tab" data-cat="Data">Data <span class="count" id="count-Data"></span></button>
+    <button class="tab" data-cat="Implementation">Implementation <span class="count" id="count-Implementation"></span></button>
+  </div>
+
+  <div class="legend sans">
+    <span class="item"><span class="swatch" style="background:var(--strong)"></span>Strong (≥ 6 teachers)</span>
+    <span class="item"><span class="swatch" style="background:var(--moderate)"></span>Moderate (3–5 teachers)</span>
+    <span class="item"><span class="swatch" style="background:var(--light)"></span>Light (1–2 teachers)</span>
+    <span class="item" style="margin-left:auto">Bars scaled 0–20</span>
+  </div>
+
+  <div class="features" id="features"></div>
+
+  <section class="how-to">
+    <h2>How to read this</h2>
+    <p>Every feature below was surfaced by at least one teacher during a focus-group session. Bars show the <strong>number of distinct teachers</strong> who raised each feature, on a scale from <strong>0 to 20</strong>. Click any row to see the teachers who raised it, the sessions it surfaced in, and a representative quote.</p>
+    <p>A teacher is counted once per feature even if they returned to the point later in the same session. Spoken statements and explicit chat agreement (&ldquo;same as Amy,&rdquo; &ldquo;I agree,&rdquo; &ldquo;flexible&rdquo;) count as a mention; a thumbs-up emoji or silent nod does not. Counts are conservative: when a teacher&rsquo;s position was ambiguous, they were not counted.</p>
+    <div class="sessions-list" id="sessions-list"></div>
+  </section>
+
+  <footer class="foot">
+    <p>Source: facilitator-led focus-group transcripts run by Khan Academy Kids and MDRC, April 7&ndash;15, 2026. 6 sessions · ~38 distinct teachers · 5 facilitators (Holly Lavin, Marysela Garza Granados, Brenna Healy, Mervett Hefyan, Marta Benito-Gomez).</p>
+  </footer>
+</div>
+
+<script>
+// ---------- Data ----------
+const SESSIONS = [
+  { id: "apr7",    label: "Apr 7",    facilitator: "Holly Lavin" },
+  { id: "apr8",    label: "Apr 8",    facilitator: "Marysela Garza Granados" },
+  { id: "apr9",    label: "Apr 9",    facilitator: "Holly Lavin" },
+  { id: "apr14",   label: "Apr 14",   facilitator: "Holly Lavin" },
+  { id: "apr15",   label: "Apr 15",   facilitator: "Holly Lavin" },
+  { id: "spanish", label: "Spanish session", facilitator: "Marysela Garza Granados" }
+];
+
+// Each feature includes: name, category, mentions (teacher → session map),
+// summary, and a representative quote.
+const FEATURES = [
+  {
+    id: "csv",
+    name: "Downloadable CSV / data export of student results",
+    category: "Data",
+    mentions: [
+      { teacher: "Destiny Stanley",       session: "apr7" },
+      { teacher: "Shanea",                session: "apr7" },
+      { teacher: "Liliana Mendoza",       session: "apr7" },
+      { teacher: "Da'Nesha Vaughn",       session: "apr8" },
+      { teacher: "Constance Tucker",      session: "apr8" },
+      { teacher: "Cathy Prestifilippo",   session: "apr9" },
+      { teacher: "Summar Hampton",        session: "apr9" },
+      { teacher: "Yoka",                  session: "apr9" },
+      { teacher: "Leilani",               session: "apr9" },
+      { teacher: "DeAuria Moultrie",      session: "apr9" },
+      { teacher: "Jessica Noah",          session: "apr9" },
+      { teacher: "Mr. Joseph",            session: "apr14" },
+      { teacher: "Demira L.",             session: "apr14" },
+      { teacher: "Lizbeth Serrato",       session: "apr14" },
+      { teacher: "Patricia Garcia",       session: "apr14" },
+      { teacher: "Megan",                 session: "apr14" },
+      { teacher: "Teresa Fierro",         session: "spanish" },
+      { teacher: "Lianett",               session: "spanish" },
+      { teacher: "Arely (Early PreK 1)",  session: "spanish" }
+    ],
+    summary: "By far the most-requested feature. Teachers across all six sessions said a downloadable spreadsheet of student-by-assessment results would let them paste evidence directly into TS Gold, DRDP, district EWS forms, and parent-conference notes — and would save them hours of duplicated handwriting. The duration column drew specific praise (DeAuria) for catching kids who rushed through assessments.",
+    quote: "I would love that feature. It gives the description of what they can do and the level that they're at. We use TS Gold, so a lot of this matches what we use.",
+    quoteAttr: "Destiny Stanley · Apr 7"
+  },
+  {
+    id: "flex-window",
+    name: "Flexible assessment window (over a fixed 2-week period)",
+    category: "Implementation",
+    mentions: [
+      { teacher: "Da'Nesha Vaughn",     session: "apr8" },
+      { teacher: "Constance Tucker",    session: "apr8" },
+      { teacher: "Giovanna Maynez",     session: "apr8" },
+      { teacher: "Cathy Prestifilippo", session: "apr9" },
+      { teacher: "Leilani",             session: "apr9" },
+      { teacher: "Lianett",             session: "spanish" },
+      { teacher: "Teresa Fierro",       session: "spanish" }
+    ],
+    summary: "When asked to choose between (a) a designated 2-week assessment window and (b) a longer flexible window, every teacher who weighed in chose flexible. The reasons clustered around weather closures, a packed pre-K beginning-of-year, and the need to align assessments with their own pacing rather than an admin-set calendar.",
+    quote: "I'd rather do flexible. Sometimes due to weather closures, unexpected closures, I need to be flexible. And then we are doing multiple other learning things, so I need to have a flexible time.",
+    quoteAttr: "Da'Nesha Vaughn · Apr 8"
+  },
+  {
+    id: "instructions",
+    name: "Clearer, age-appropriate question wording",
+    category: "Content",
+    mentions: [
+      { teacher: "Amy Montz",                  session: "apr14" },
+      { teacher: "Stephanie (Windows User)",   session: "apr15" },
+      { teacher: "Rosie Valdez",               session: "apr15" },
+      { teacher: "Kimberly",                   session: "apr15" },
+      { teacher: "Kristy Caesar",              session: "apr15" },
+      { teacher: "Teresa Fierro",              session: "spanish" }
+    ],
+    summary: "Teachers flagged specific phrases that don't land for 3- and 4-year-olds — “How many people <em>are there</em>?” (Amy), “Find the right letter to make the word <em>bed</em>” (Stephanie/Kimberly), and the syllable-deletion prompt “<em>leche</em> without <em>che</em>” (Teresa) all came up as too formal or too abstract. Rosie suggested anchoring the print-concepts question with “How would you read the book?” to cue the action.",
+    quote: "How many people are there? For a four-year-old, what do you mean, are there? How many people do you see? — that's basic language I'd use in the classroom. The vocabulary for my class this year has been the biggest struggle.",
+    quoteAttr: "Amy Montz · Apr 14"
+  },
+  {
+    id: "drag-fine-motor",
+    name: "Alternative to drag interactions for fine-motor support",
+    category: "UX",
+    mentions: [
+      { teacher: "Destiny Stanley",   session: "apr7" },
+      { teacher: "Shanea",            session: "apr7" },
+      { teacher: "Amy Montz",         session: "apr14" },
+      { teacher: "Wendy Rodriguez",   session: "apr14" },
+      { teacher: "Lizbeth Serrato",   session: "apr14" }
+    ],
+    summary: "Teachers consistently reported that students who knew the answer couldn't show it because the dragging action defeated them — particularly the pom-pom-to-letter line-drawing task and the “drag the monster to the shelf” pattern. Two teachers (Amy, Wendy) called out left-handed students as struggling especially. The recommendation: prefer tap-and-give-it-to-Pec or tap-the-letter formats over drag for younger / younger-fingered students.",
+    quote: "Some students will poke at it and try and drag it. They don't quite grasp at times to flatten their finger to drag it. They may know the answer, but the actual movement is frustrating. It's also with my left-handed — I have two that struggle more with that natural movement.",
+    quoteAttr: "Amy Montz · Apr 14"
+  },
+  {
+    id: "discontinue",
+    name: "Discontinue rule (auto-end after consecutive wrong answers)",
+    category: "UX",
+    mentions: [
+      { teacher: "Da'Nesha Vaughn",   session: "apr8" },
+      { teacher: "Natashia Vaughn",   session: "apr8" },
+      { teacher: "Constance Tucker",  session: "apr8" },
+      { teacher: "Tavia",             session: "apr8" }
+    ],
+    summary: "When the Apr 8 group was asked to choose between investing engineering time in a discontinue rule or a pause feature, the room voted unanimously for discontinue. The thinking: a 3-year-old who cannot do an assessment shouldn't be made to sit through 20 questions of it. (Holly previewed this rule in the Apr 7 session and got similar agreement, but no one named it as their own ask there.)",
+    quote: "Discontinue.",
+    quoteAttr: "Da'Nesha Vaughn · Apr 8"
+  },
+  {
+    id: "save-progress-fc",
+    name: "Save Progress in Full Class Mode (combine the two modes)",
+    category: "UX",
+    mentions: [
+      { teacher: "Tavia",          session: "apr8" },
+      { teacher: "Megan",          session: "apr14" },
+      { teacher: "Kristy Caesar",  session: "apr15" }
+    ],
+    summary: "The Save Progress feature only works in student-only mode today, but most teachers prefer full-class mode — partly because logging students in and out is too slow, partly because finding-your-name is itself a literacy practice. Teachers want both: full-class mode's speed plus student-only's 10-minute resume window.",
+    quote: "I wish there was a way that we could combine them both, so that if a child did go to the bathroom, it would keep them where they're at, but then it would be easier for my staff to get the learners on quicker for the full class mode.",
+    quoteAttr: "Kristy Caesar · Apr 15"
+  },
+  {
+    id: "save-longer",
+    name: "Longer save-progress duration (more than 10 minutes)",
+    category: "UX",
+    mentions: [
+      { teacher: "Stephanie Begay",   session: "apr7" },
+      { teacher: "Liliana Mendoza",   session: "apr7" },
+      { teacher: "Patricia Garcia",   session: "apr14" }
+    ],
+    summary: "Among teachers who knew about the 10-minute save window, several said it was too short to be useful. Patricia raised a different cadence entirely — saving across the morning-to-afternoon gap — for kids who hit a wall and need a real break, not a bathroom break.",
+    quote: "Sometimes it would be more beneficial if it was longer than 10 minutes. That problem was too hard, so what they need is a little break from it — and if it saves it for the day, sometimes if we don't finish in the morning our lessons, then we continue in the PM session.",
+    quoteAttr: "Patricia Garcia · Apr 14"
+  },
+  {
+    id: "auto-advance",
+    name: "Auto-advance / item duration limit on inactive questions",
+    category: "UX",
+    mentions: [
+      { teacher: "Teresa Fierro",          session: "spanish" },
+      { teacher: "Arely (Early PreK 1)",   session: "spanish" },
+      { teacher: "María Luna",             session: "spanish" }
+    ],
+    summary: "Teachers in the Spanish session described kids who park on a single question — playing with the fishbowl, watching the screen — for 10–20 minutes. They want a cap so the assessment moves on after 30–60 seconds of inactivity. Lianett pushed back: a per-question timer would feel like pressure on focused 4- and 5-year-olds. The shape of the request: timeout on idleness, not a stopwatch on every question.",
+    quote: "Like in a corner, the time they've been working on the tablet on this activity. So as teachers, who are always running around, it's easier for us to peek and say, they already have 10, 12 minutes — okay, perfect, it's done.",
+    quoteAttr: "Teresa Fierro · Spanish session"
+  },
+  {
+    id: "timer",
+    name: "Visible session timer for the teacher",
+    category: "UX",
+    mentions: [
+      { teacher: "Teresa Fierro",          session: "spanish" },
+      { teacher: "Arely (Early PreK 1)",   session: "spanish" },
+      { teacher: "Lianett",                session: "spanish" }
+    ],
+    summary: "Three teachers in the Spanish session described running their own kitchen-timer or phone-timer next to the iPad to know when a student had been on a single activity too long. They want this surfaced inside the app — either as a small clock in the corner or as an alert when a session crosses 20 minutes.",
+    quote: "Set like a little bell, a notice or something — I don't know, for a kid who's been on an assessment for 20 minutes, that's already too much.",
+    quoteAttr: "Lianett · Spanish session"
+  },
+  {
+    id: "exit-prevention",
+    name: "Better screen-exit prevention (lock kids inside the app)",
+    category: "UX",
+    mentions: [
+      { teacher: "Kimberly",               session: "apr15" },
+      { teacher: "María Luna",             session: "spanish" },
+      { teacher: "Arely (Early PreK 1)",   session: "spanish" }
+    ],
+    summary: "Tech-savvy 4-year-olds figured out the swipe-up gesture and started exiting the app to find the camera, Safari, or iPad settings. Kimberly told the room she'd hacked together her own screen-lock. The Spanish-session teachers reported this happening multiple times per child per day. The ask is for in-app guided access or a swipe lock that survives kid-finger curiosity.",
+    quote: "There are some kids who exit, but they already know how to exit, and they go to take pictures, they go to the camera. Then later see if there's something so they can't exit, because there are many children who already know how to operate tablets.",
+    quoteAttr: "María Luna · Spanish session"
+  },
+  {
+    id: "pre-post",
+    name: "Pre-assessment baseline followed by post for measuring growth",
+    category: "Data",
+    mentions: [
+      { teacher: "Leilani",               session: "apr9" },
+      { teacher: "Cathy Prestifilippo",   session: "apr9" },
+      { teacher: "Rosie Valdez",          session: "apr15" }
+    ],
+    summary: "Three teachers, unprompted, sketched the same workflow: give the assessment cold at the start of the year as a baseline, teach to the gaps, then re-assess to show growth. Rosie put her finger on the missing piece directly: without pre-and-post framing, it's not clear what teachers are supposed to <em>do</em> with the dashboard data.",
+    quote: "Are you trying to get the raw data before they know — kind of like a pre-assessment? That would really, really be helpful — to see the growth from the first pre to the post. That's the missing piece for me.",
+    quoteAttr: "Rosie Valdez · Apr 15"
+  },
+  {
+    id: "spanish-blending",
+    name: "Spanish-language phoneme/syllable blending assessments",
+    category: "Content",
+    mentions: [
+      { teacher: "Arely (Early PreK 1)",   session: "spanish" },
+      { teacher: "Teresa Fierro",          session: "spanish" },
+      { teacher: "Lianett",                session: "spanish" }
+    ],
+    summary: "When Mari floated the idea of porting English Blending Phonemes / Blending Syllables into Spanish, teachers in the bilingual-classroom session were enthusiastic. Lianett separately surfaced a related gap: even when classes are bilingual, the Ñ and J sounds aren't being assessed in Spanish, and her students get tripped up by Spanish letter names they otherwise know how to say.",
+    quote: "Since the kids we have are about to enter Kindergarten and are about to start reading, we have some who are already reading words of up to 4–5 letters. I think it would be a good idea to add that to the program.",
+    quoteAttr: "Arely · Spanish session"
+  },
+  {
+    id: "instructions-replay",
+    name: "Replay-instructions button for teacher mid-assessment",
+    category: "UX",
+    mentions: [
+      { teacher: "DeAuria Moultrie",   session: "apr9" },
+      { teacher: "Jessica Noah",       session: "apr9" }
+    ],
+    summary: "On the executive-function assessments (hearts/stars, day/night), teachers can't help kids who get stuck because they never heard the instruction in the first place. DeAuria suggested a “secret” teacher-only button to replay the prompt; Jessica suggested the same instructions written above the activity so a teacher can read and re-prompt without making the student listen again.",
+    quote: "I tapped Cody so Cody can repeat the question, and Cody did not repeat it. So that, I feel like, will be a great addition to it for all of it to repeat. If I'm jumping halfway in, I don't know what they're talking about.",
+    quoteAttr: "DeAuria Moultrie · Apr 9"
+  },
+  {
+    id: "easier-3yo",
+    name: "Easier / more game-like content for 3-year-olds",
+    category: "Content",
+    mentions: [
+      { teacher: "Shanea",            session: "apr7" },
+      { teacher: "Destiny Stanley",   session: "apr7" }
+    ],
+    summary: "The Apr 7 group flagged that 3-year-olds — especially ones fresh out of the toddler room — are being asked to do things over their heads. The discontinue rule will help, but Shanea and Destiny separately asked for a softer on-ramp: more game-like, with the assessment skills embedded in play rather than presented as a test.",
+    quote: "I feel like for the 3-year-olds, it should be more game-ish, if that makes sense. If it was more to their level — but go, as far as for the 4-year-olds, I think it's perfect.",
+    quoteAttr: "Destiny Stanley · Apr 7"
+  },
+  {
+    id: "fun-breaks",
+    name: "In-app fun activities or breaks between assessments",
+    category: "Content",
+    mentions: [
+      { teacher: "Shanea",            session: "apr7" },
+      { teacher: "Destiny Stanley",   session: "apr7" }
+    ],
+    summary: "Several younger students treat the colouring/tracing activities at the top of the app as the reward they're working toward — and lose patience with “assessment, assessment, assessment.” The pitch: thread a brief play activity between assessments so kids aren't grinding through a test bank.",
+    quote: "Let them do some of the fun stuff, and then go to the next assessment. They do an assessment, and then they do something fun, and then they do another assessment, where they're not just doing assessment, assessment, assessment.",
+    quoteAttr: "Destiny Stanley · Apr 7"
+  },
+  {
+    id: "remove-line-match",
+    name: "Remove the pom-pom “match the sounds” line-drawing question",
+    category: "Content",
+    mentions: [
+      { teacher: "Shanea",            session: "apr7" },
+      { teacher: "Destiny Stanley",   session: "apr7" }
+    ],
+    summary: "On the consonant-sounds assessment, the question asking students to draw a line from a pom-pom (which says a sound) to the matching letter was the one teachers said their students could not do — not because they didn't know the sound, but because the multi-step drag-line interaction was too much. Holly confirmed the team is already considering removing it.",
+    quote: "Most of my children didn't really understand that one as much. The other ones, even the 3-year-olds could understand. But on the match-the-sounds one, they just looked at moving the monsters up onto the little platform — they didn't really understand to look for the sound.",
+    quoteAttr: "Shanea · Apr 7"
+  },
+  {
+    id: "question-level",
+    name: "Question-level data on the dashboard",
+    category: "Data",
+    mentions: [
+      { teacher: "Constance Tucker",          session: "apr8" },
+      { teacher: "Stephanie (Windows User)",  session: "apr15" }
+    ],
+    summary: "The dashboard reports a level (age 3 / age 4 / kindergarten) but doesn't show which specific questions a student got right or wrong. Stephanie laid out the use case in the most detail: with item-level data, she could see whether the class struggled on 3-element patterns specifically and adjust her small-group teaching, rather than just knowing the class “ranked here.”",
+    quote: "When you see their results, you're not really seeing, like, most of your kids got this right, or most of them didn't. To see what exactly they were getting right consistently or wrong consistently — to be able to then support that further in the classroom.",
+    quoteAttr: "Stephanie (Windows User) · Apr 15"
+  },
+  {
+    id: "next-step",
+    name: "Suggested next-step practice skills based on dashboard results",
+    category: "Data",
+    mentions: [
+      { teacher: "Giovanna Maynez",    session: "apr8" },
+      { teacher: "Constance Tucker",   session: "apr8" }
+    ],
+    summary: "When Mari asked whether anything else belonged on the assessment dashboard, Giovanna and Constance landed on the same thing: pair the data with a recommended practice activity. If the class score is at age 3 and you have 8 kids who haven't moved up, the dashboard should suggest the rhyming or letter-sound practice that addresses that gap.",
+    quote: "Probably rhyming with my kids — they had such a hard time retaining rhyming. … If you see the dashboard at the 2-year-old you have X amount of students, a suggested practice skill to go with it.",
+    quoteAttr: "Constance Tucker · Apr 8"
+  },
+  {
+    id: "letter-inventory",
+    name: "Letter-by-letter inventory data (which letters does this student know)",
+    category: "Data",
+    mentions: [
+      { teacher: "Liliana Mendoza", session: "apr7" }
+    ],
+    summary: "The current dashboard reports an age bucket (e.g., this child is at age-4 letter sound skills). Liliana asked for the underlying inventory: the actual list of which letters each student knows by name and by sound. Holly noted this had come up in earlier focus groups too and was being passed to product.",
+    quote: "Is there, for a literacy example, something that would show how many letters they know by name, or how many letters they know by sound? Is that something that could be on the data?",
+    quoteAttr: "Liliana Mendoza · Apr 7"
+  },
+  {
+    id: "most-recent",
+    name: "Show most-recent score, not highest score",
+    category: "Data",
+    mentions: [
+      { teacher: "Da'Nesha Vaughn", session: "apr8" }
+    ],
+    summary: "When a student takes an assessment more than once, the dashboard surfaces the highest score. Da'Nesha pointed out the obvious problem: she needs to know what they can do <em>now</em>, not what their best day looked like in October. A timeline view (or at minimum a most-recent toggle) would let her see whether a skill has slipped.",
+    quote: "I would like to see the most recent score. So I can have a timeline — oh, this is where they're at currently, instead of seeing the highest score, which they may have scored higher in a later date versus today.",
+    quoteAttr: "Da'Nesha Vaughn · Apr 8"
+  },
+  {
+    id: "lock-completed",
+    name: "Lock or hide completed assignments on the student home screen",
+    category: "UX",
+    mentions: [
+      { teacher: "Patricia Garcia", session: "apr14" }
+    ],
+    summary: "Once a student completes an assignment, the starred tile stays on their home page — and several of Patricia's students just keep re-clicking the same one instead of moving to the next. Lock the completed assignment, or take it off the home screen, so the student can't accidentally redo their finished work.",
+    quote: "Sometimes they accidentally click it again. So then I have to log it out and come back in, or with a learner who wants to always do the same one. Maybe locking those assignments, or removing them from their home screen, that would be very beneficial.",
+    quoteAttr: "Patricia Garcia · Apr 14"
+  },
+  {
+    id: "pom-pom-pictures",
+    name: "Pictures on the pom-poms in vowel-sound matching",
+    category: "Content",
+    mentions: [
+      { teacher: "Da'Nesha Vaughn", session: "apr8" }
+    ],
+    summary: "On the vowel-sounds assessment, the pom-poms each say a different sound — but they all look identical, so even Da'Nesha admitted she had to re-tap them to remember which was which. She suggested putting a small picture on each (elephant for short E, apple for short A, otter for short O) so the visual stays anchored to the sound.",
+    quote: "Like the pom-pom ones — forgetting which sound makes what sound. I'm like, click that again! I think better pictures for that side, the pom-poms, would help.",
+    quoteAttr: "Da'Nesha Vaughn · Apr 8"
+  },
+  {
+    id: "cody-adult",
+    name: "Adult/guide voice option for Cody (vs. childlike friend)",
+    category: "Content",
+    mentions: [
+      { teacher: "Constance Tucker", session: "apr8" }
+    ],
+    summary: "Cody currently reads instructions in a childlike-friend voice. Mari noted that teachers often re-read the same instruction in their own adult voice and the student then complies — suggesting an adult/guide variant would do real work. Constance was the one explicit verbal yes; the rest of the room nodded.",
+    quote: "Probably agree.",
+    quoteAttr: "Constance Tucker · Apr 8"
+  },
+  {
+    id: "iep",
+    name: "Accommodations for IEP / spectrum learners",
+    category: "Content",
+    mentions: [
+      { teacher: "Liliana Mendoza", session: "apr7" }
+    ],
+    summary: "Liliana described an autism-spectrum learner who can demonstrate pattern knowledge spontaneously — through music, lining objects up, sorting by color — but cannot perform a pattern task on command. She asked the team to think about open-ended formats anchored to interests (collections, animals, ocean creatures, color bears) for learners who don't perform on cue.",
+    quote: "I find that my learners that are on the autism spectrum, they love collections and lining things up. They love colors. To make it more enticing — for their level, the kind of things that they like to do.",
+    quoteAttr: "Liliana Mendoza · Apr 7"
+  },
+  {
+    id: "schedule-preview",
+    name: "Advance preview of which assessments are coming next week",
+    category: "Implementation",
+    mentions: [
+      { teacher: "Jasmine", session: "apr15" }
+    ],
+    summary: "Jasmine pointed out that assessments are being assigned Sunday night / Monday morning, leaving teachers no runway to align the upcoming week's lesson plans. A week-ahead preview of what's queued would let her preteach the relevant vocabulary and make sure students aren't being assessed cold on a skill she hasn't yet introduced.",
+    quote: "It will be helpful to know what's going to be on the dashboard, like, a week before, so we can add it in our lesson plans.",
+    quoteAttr: "Jasmine · Apr 15"
+  },
+  {
+    id: "curriculum-align",
+    name: "Difficulty that scales with the school year (easier early, harder late)",
+    category: "Content",
+    mentions: [
+      { teacher: "Kristy Caesar", session: "apr15" }
+    ],
+    summary: "Kristy framed it through the California Preschool/TK Foundations: at the start of the year, every assessment should be calibrated to the skills 3- and 4-year-olds are actually working on at <em>that</em> point in the year, then ramp up as the year progresses. Treating one assessment as the whole-year measure misses where students actually are.",
+    quote: "In the beginning of the year, making the assessments match more skills that our learners are doing at that time, and then as the year progresses, making the assessments more challenging.",
+    quoteAttr: "Kristy Caesar · Apr 15"
+  }
+];
+
+// ---------- Render ----------
+const featuresEl = document.getElementById('features');
+const tabsEl = document.getElementById('tabs');
+const sessionsListEl = document.getElementById('sessions-list');
+
+const SCALE_MAX = 20;
+
+function classifyByCount(n) {
+  if (n >= 6) return 'strong';
+  if (n >= 3) return 'moderate';
+  return 'light';
+}
+
+function renderFeatures(filter) {
+  // Sort by count desc, then alpha
+  const enriched = FEATURES.map(f => ({ ...f, count: f.mentions.length }));
+  const filtered = (filter === 'all') ? enriched : enriched.filter(f => f.category === filter);
+  filtered.sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+
+  featuresEl.innerHTML = filtered.map(f => {
+    const pct = Math.min(100, (f.count / SCALE_MAX) * 100);
+    const tone = classifyByCount(f.count);
+    const sessionIds = [...new Set(f.mentions.map(m => m.session))];
+    const sessionLabels = sessionIds.map(sid => SESSIONS.find(s => s.id === sid)?.label).filter(Boolean);
+    const teacherList = f.mentions.map(m => m.teacher);
+
+    return `
+      <article class="feature" data-id="${f.id}" data-cat="${f.category}">
+        <div class="feature-row" tabindex="0" role="button" aria-expanded="false">
+          <div>
+            <div class="feature-name">${f.name}</div>
+            <div class="feature-meta sans">${f.category}<span class="dot">•</span>${sessionLabels.length} session${sessionLabels.length===1?'':'s'}<span class="chev"></span></div>
+          </div>
+          <div class="bar-cell">
+            <div class="bar"><div class="bar-fill ${tone}" style="width:${pct}%"></div></div>
+          </div>
+          <div class="count-cell">${f.count}<span class="of">/${SCALE_MAX}</span></div>
+        </div>
+        <div class="feature-detail">
+          <div class="detail-grid">
+            <div>
+              <h4>Teachers (${teacherList.length})</h4>
+              <div class="teachers">
+                ${teacherList.map(t => `<span class="chip">${t}</span>`).join('')}
+              </div>
+            </div>
+            <div>
+              <h4>Surfaced in</h4>
+              <div class="sessions">
+                ${sessionLabels.map(s => `<span class="chip session">${s}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+          <div class="summary">
+            <p>${f.summary}</p>
+            <blockquote>&ldquo;${f.quote}&rdquo;<cite>— ${f.quoteAttr}</cite></blockquote>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  // Click + keyboard to toggle
+  document.querySelectorAll('.feature-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const f = row.closest('.feature');
+      const open = f.classList.toggle('open');
+      row.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    row.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        row.click();
+      }
+    });
+  });
+}
+
+function renderTabCounts() {
+  document.getElementById('count-all').textContent = FEATURES.length;
+  ['UX','Content','Data','Implementation'].forEach(cat => {
+    const el = document.getElementById('count-' + cat);
+    if (el) el.textContent = FEATURES.filter(f => f.category === cat).length;
+  });
+}
+
+tabsEl.addEventListener('click', e => {
+  const btn = e.target.closest('.tab');
+  if (!btn) return;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderFeatures(btn.dataset.cat);
+});
+
+// Render sessions list
+sessionsListEl.innerHTML = SESSIONS.map(s =>
+  `<span class="chip session">${s.label} · ${s.facilitator}</span>`
+).join('');
+
+renderTabCounts();
+renderFeatures('all');
+</script>
+</body>
+</html>
